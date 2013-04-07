@@ -1,0 +1,21 @@
+F:\projekty\Bookworms\Bookworms\bin\Bookworms.dll
+F:\projekty\Bookworms\Bookworms\bin\Bookworms.pdb
+F:\projekty\Bookworms\Bookworms\bin\EntityFramework.dll
+F:\projekty\Bookworms\Bookworms\bin\EntityFramework.xml
+F:\projekty\Bookworms\Bookworms\obj\Debug\ResolveAssemblyReference.cache
+F:\projekty\Bookworms\Bookworms\obj\Debug\Bookworms.dll
+F:\projekty\Bookworms\Bookworms\obj\Debug\Bookworms.pdb
+E:\Bookworms\Bookworms\bin\Bookworms.dll
+E:\Bookworms\Bookworms\bin\Bookworms.pdb
+E:\Bookworms\Bookworms\bin\EntityFramework.dll
+E:\Bookworms\Bookworms\bin\EntityFramework.xml
+E:\Bookworms\Bookworms\obj\Debug\ResolveAssemblyReference.cache
+E:\Bookworms\Bookworms\obj\Debug\Bookworms.dll
+E:\Bookworms\Bookworms\obj\Debug\Bookworms.pdb
+C:\Projekty UG\Bookworms\Bookworms\bin\Bookworms.dll
+C:\Projekty UG\Bookworms\Bookworms\bin\Bookworms.pdb
+C:\Projekty UG\Bookworms\Bookworms\bin\EntityFramework.dll
+C:\Projekty UG\Bookworms\Bookworms\bin\EntityFramework.xml
+C:\Projekty UG\Bookworms\Bookworms\obj\Debug\ResolveAssemblyReference.cache
+C:\Projekty UG\Bookworms\Bookworms\obj\Debug\Bookworms.dll
+C:\Projekty UG\Bookworms\Bookworms\obj\Debug\Bookworms.pdb

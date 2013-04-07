@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bookwormsModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="sbartoszak_bookwormsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Books" EntityType="bookwormsModel.Book" />
+    <EntitySet Name="Genres" EntityType="bookwormsModel.Genre" />
+    <EntitySet Name="Reviews" EntityType="bookwormsModel.Review" />
+    <AssociationSet Name="FK_Book_Genre" Association="bookwormsModel.FK_Book_Genre">
+      <End Role="Genre" EntitySet="Genres" />
+      <End Role="Book" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Review_Book" Association="bookwormsModel.FK_Review_Book">
+      <End Role="Book" EntitySet="Books" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="IdBook" />
+    </Key>
+    <Property Type="Int32" Name="IdBook" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Title" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Author" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="IdGenre" Nullable="false" />
+    <Property Type="DateTime" Name="AddDate" Nullable="false" />
+    <NavigationProperty Name="Genre" Relationship="bookwormsModel.FK_Book_Genre" FromRole="Book" ToRole="Genre" />
+    <NavigationProperty Name="Reviews" Relationship="bookwormsModel.FK_Review_Book" FromRole="Book" ToRole="Review" />
+  </EntityType>
+  <EntityType Name="Genre">
+    <Key>
+      <PropertyRef Name="IdGenre" />
+    </Key>
+    <Property Type="Int32" Name="IdGenre" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Books" Relationship="bookwormsModel.FK_Book_Genre" FromRole="Genre" ToRole="Book" />
+  </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="IdReview" />
+    </Key>
+    <Property Type="Int32" Name="IdReview" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="IdBook" Nullable="false" />
+    <Property Type="String" Name="Title" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Author" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="false" />
+    <NavigationProperty Name="Book" Relationship="bookwormsModel.FK_Review_Book" FromRole="Review" ToRole="Book" />
+  </EntityType>
+  <Association Name="FK_Book_Genre">
+    <End Type="bookwormsModel.Genre" Role="Genre" Multiplicity="1" />
+    <End Type="bookwormsModel.Book" Role="Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genre">
+        <PropertyRef Name="IdGenre" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="IdGenre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Review_Book">
+    <End Type="bookwormsModel.Book" Role="Book" Multiplicity="1" />
+    <End Type="bookwormsModel.Review" Role="Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="IdBook" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="IdBook" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

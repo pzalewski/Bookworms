@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bookwormsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="bookwormsModelStoreContainer">
+    <EntitySet Name="Book" EntityType="bookwormsModel.Store.Book" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Genre" EntityType="bookwormsModel.Store.Genre" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Review" EntityType="bookwormsModel.Store.Review" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Book_Genre" Association="bookwormsModel.Store.FK_Book_Genre">
+      <End Role="Genre" EntitySet="Genre" />
+      <End Role="Book" EntitySet="Book" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Review_Book" Association="bookwormsModel.Store.FK_Review_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Review" EntitySet="Review" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="IdBook" />
+    </Key>
+    <Property Name="IdBook" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="Author" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="IdGenre" Type="int" Nullable="false" />
+    <Property Name="AddDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Genre">
+    <Key>
+      <PropertyRef Name="IdGenre" />
+    </Key>
+    <Property Name="IdGenre" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="IdReview" />
+    </Key>
+    <Property Name="IdReview" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="IdBook" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="Content" Type="text" Nullable="false" />
+    <Property Name="Author" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Book_Genre">
+    <End Role="Genre" Type="bookwormsModel.Store.Genre" Multiplicity="1" />
+    <End Role="Book" Type="bookwormsModel.Store.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genre">
+        <PropertyRef Name="IdGenre" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="IdGenre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Review_Book">
+    <End Role="Book" Type="bookwormsModel.Store.Book" Multiplicity="1" />
+    <End Role="Review" Type="bookwormsModel.Store.Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="IdBook" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="IdBook" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

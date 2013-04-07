@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="bookwormsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="bookwormsModelStoreContainer">
+          <EntitySet Name="Book" EntityType="bookwormsModel.Store.Book" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Genre" EntityType="bookwormsModel.Store.Genre" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Review" EntityType="bookwormsModel.Store.Review" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Book_Genre" Association="bookwormsModel.Store.FK_Book_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Review_Book" Association="bookwormsModel.Store.FK_Review_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Review" EntitySet="Review" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="IdBook" />
+          </Key>
+          <Property Name="IdBook" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="Author" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="IdGenre" Type="int" Nullable="false" />
+          <Property Name="AddDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="IdGenre" />
+          </Key>
+          <Property Name="IdGenre" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="IdReview" />
+          </Key>
+          <Property Name="IdReview" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IdBook" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="Content" Type="text" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Book_Genre">
+          <End Role="Genre" Type="bookwormsModel.Store.Genre" Multiplicity="1" />
+          <End Role="Book" Type="bookwormsModel.Store.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="IdGenre" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IdGenre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Review_Book">
+          <End Role="Book" Type="bookwormsModel.Store.Book" Multiplicity="1" />
+          <End Role="Review" Type="bookwormsModel.Store.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="IdBook" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="IdBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bookwormsModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="sbartoszak_bookwormsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Books" EntityType="bookwormsModel.Book" />
+          <EntitySet Name="Genres" EntityType="bookwormsModel.Genre" />
+          <EntitySet Name="Reviews" EntityType="bookwormsModel.Review" />
+          <AssociationSet Name="FK_Book_Genre" Association="bookwormsModel.FK_Book_Genre">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Review_Book" Association="bookwormsModel.FK_Review_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="IdBook" />
+          </Key>
+          <Property Type="Int32" Name="IdBook" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Author" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="IdGenre" Nullable="false" />
+          <Property Type="DateTime" Name="AddDate" Nullable="false" />
+          <NavigationProperty Name="Genre" Relationship="bookwormsModel.FK_Book_Genre" FromRole="Book" ToRole="Genre" />
+          <NavigationProperty Name="Reviews" Relationship="bookwormsModel.FK_Review_Book" FromRole="Book" ToRole="Review" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="IdGenre" />
+          </Key>
+          <Property Type="Int32" Name="IdGenre" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Books" Relationship="bookwormsModel.FK_Book_Genre" FromRole="Genre" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="IdReview" />
+          </Key>
+          <Property Type="Int32" Name="IdReview" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="IdBook" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Author" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="bookwormsModel.FK_Review_Book" FromRole="Review" ToRole="Book" />
+        </EntityType>
+        <Association Name="FK_Book_Genre">
+          <End Type="bookwormsModel.Genre" Role="Genre" Multiplicity="1" />
+          <End Type="bookwormsModel.Book" Role="Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="IdGenre" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IdGenre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Review_Book">
+          <End Type="bookwormsModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="bookwormsModel.Review" Role="Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="IdBook" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="IdBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bookwormsModelStoreContainer" CdmEntityContainer="sbartoszak_bookwormsEntities">
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="bookwormsModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="AddDate" ColumnName="AddDate" />
+                <ScalarProperty Name="IdGenre" ColumnName="IdGenre" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IdBook" ColumnName="IdBook" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="bookwormsModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdGenre" ColumnName="IdGenre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="bookwormsModel.Review">
+              <MappingFragment StoreEntitySet="Review">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IdBook" ColumnName="IdBook" />
+                <ScalarProperty Name="IdReview" ColumnName="IdReview" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="BookwormModel">
+        <EntityTypeShape EntityType="bookwormsModel.Book" Width="1.5" PointX="3" PointY="0.875" Height="2.0853483072916674" />
+        <EntityTypeShape EntityType="bookwormsModel.Genre" Width="1.5" PointX="0.75" PointY="1.25" Height="1.4279589843749996" />
+        <EntityTypeShape EntityType="bookwormsModel.Review" Width="1.5" PointX="5.25" PointY="0.875" Height="2.0853483072916674" />
+        <AssociationConnector Association="bookwormsModel.FK_Book_Genre" >
+          <ConnectorPoint PointX="2.25" PointY="1.9639794921874998" />
+          <ConnectorPoint PointX="3" PointY="1.9639794921874998" />
+        </AssociationConnector>
+        <AssociationConnector Association="bookwormsModel.FK_Review_Book" >
+          <ConnectorPoint PointX="4.5" PointY="1.9176741536458337" />
+          <ConnectorPoint PointX="5.25" PointY="1.9176741536458337" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
